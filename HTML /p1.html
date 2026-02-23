@@ -1,0 +1,203 @@
+Moving Rectangle using Canvas
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Working SVG Animation</title>
+</head>
+<body>
+
+<svg width="300" height="150" style="border:1px solid black">
+  <rect x="20" y="50" width="50" height="50" fill="red">
+    <animate
+      attributeName="x"
+      from="20"
+      to="230"
+      dur="2s"
+      repeatCount="indefinite" />
+  </rect>
+
+  <text x="10" y="20" font-size="16">SVG</text>
+</svg>
+
+</body>
+</html>
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Canvas Repeating Motion</title>
+</head>
+<body>
+
+<canvas id="c" width="300" height="150" style="border:1px solid black"></canvas>
+
+<script>
+  const canvas = document.getElementById("c");
+  const ctx = canvas.getContext("2d");
+
+  let x = 20;
+
+  function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    // draw box
+    ctx.fillStyle = "red";
+    ctx.fillRect(x, 50, 50, 50);
+
+    // text
+    ctx.font = "16px Arial";
+    ctx.fillText("Canvas", 10, 20);
+
+    // move repeatedly
+    x += 2;
+    if (x > canvas.width) x = -50;
+
+    requestAnimationFrame(animate);
+  }
+
+  animate();
+</script>
+
+</body>
+</html>
+
+
+
+
+All:
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Canvas API – All in One</title>
+  <style>
+    body {
+      margin: 0;
+      background: #ea0707;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    canvas {
+      background: #000000;
+      border: 2px solid #000;
+    }
+  </style>
+</head>
+<body>
+
+<canvas id="canvas" width="800" height="500"></canvas>
+
+<script>
+  const canvas = document.getElementById("canvas");
+  const ctx = canvas.getContext("2d");
+
+  /* ===============================
+     RECTANGLES
+  =============================== */
+  ctx.fillStyle = "red";
+  ctx.fillRect(20, 20, 100, 60);
+
+  ctx.strokeStyle = "blue";
+  ctx.lineWidth = 4;
+  ctx.strokeRect(140, 20, 100, 60);
+
+  ctx.clearRect(180, 40, 30, 30);
+
+  /* ===============================
+     LINES & PATHS
+  =============================== */
+  ctx.beginPath();
+  ctx.moveTo(20, 120);
+  ctx.lineTo(200, 120);
+  ctx.lineTo(200, 180);
+  ctx.stroke();
+
+  /* ===============================
+     CIRCLE / ARC
+  =============================== */
+  ctx.beginPath();
+  ctx.arc(350, 150, 40, 0, Math.PI * 2);
+  ctx.fillStyle = "green";
+  ctx.fill();
+
+  /* ===============================
+     TEXT
+  =============================== */
+  ctx.font = "24px Arial";
+  ctx.fillStyle = "black";
+  ctx.fillText("Canvas API Demo", 20, 250);
+
+  ctx.strokeText("Stroke Text", 20, 290);
+
+  /* ===============================
+     GRADIENT
+  =============================== */
+  const gradient = ctx.createLinearGradient(0, 0, 200, 0);
+  gradient.addColorStop(0, "purple");
+  gradient.addColorStop(1, "pink");
+
+  ctx.fillStyle = gradient;
+  ctx.fillRect(20, 320, 200, 50);
+
+  /* ===============================
+     SHADOW
+  =============================== */
+  ctx.shadowColor = "black";
+  ctx.shadowBlur = 10;
+  ctx.shadowOffsetX = 5;
+  ctx.shadowOffsetY = 5;
+
+  ctx.fillStyle = "orange";
+  ctx.fillRect(260, 300, 120, 60);
+
+  ctx.shadowBlur = 0; // reset shadow
+
+  /* ===============================
+     IMAGE
+  =============================== */
+  const img = new Image();
+  img.src = "https://upload.wikimedia.org/wikipedia/commons/6/6a/JavaScript-logo.png";
+  img.onload = () => {
+    ctx.drawImage(img, 420, 260, 100, 100);
+  };
+
+  /* ===============================
+     TRANSFORM
+  =============================== */
+  ctx.save();
+  ctx.translate(650, 100);
+  ctx.rotate(Math.PI / 4);
+  ctx.fillStyle = "cyan";
+  ctx.fillRect(-30, -30, 60, 60);
+  ctx.restore();
+
+  /* ===============================
+     ANIMATION
+  =============================== */
+  let x = 0;
+
+  function animate() {
+    ctx.clearRect(500, 350, 300, 150);
+
+    ctx.beginPath();
+    ctx.arc(520 + x, 420, 20, 0, Math.PI * 2);
+    ctx.fillStyle = "blue";
+    ctx.fill();
+
+    x += 2;
+    if (x > 200) x = 0;
+
+    requestAnimationFrame(animate);
+  }
+
+  animate();
+</script>
+
+</body>
+</html>
+
+

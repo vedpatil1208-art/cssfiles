@@ -1,0 +1,15 @@
+box {
+    background-color: lightblue;
+    padding: 20px;
+    margin: 30px;
+    border: 2px blue;
+}
+
+button {
+    background-color: green;
+    color:whitesmoke;
+    padding: 10px 20px;
+    border: black;
+    font-size: 16px;
+    font: italic;
+}

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Interactive Notion Canvas</title>
+    <style>
+        /* Centering the canvas on the screen */
+        body {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background:linear-gradient(to bottom, #ffa71a, #ffb907); /* Dark background to make canvas pop */
+            font-family: sans-serif;
+        }
+        canvas {
+            box-shadow: 0 20px 50px rgba(247, 8, 8, 0.5);
+            cursor: default;
+            border-radius: 12px;
+        }
+    </style>
+</head>
+<body>
+
+    <canvas id="notionCanvas" width="900" height="500"></canvas>
+
+    <script>
+        const canvas = document.getElementById('notionCanvas');
+        const ctx = canvas.getContext('2d');
+
+        // Button Coordinates (for clicking logic)
+        const btn = {
+            x: 80,
+            y: 320,
+            w: 180,
+            h: 50,
+            text: "Get started free"
+        };
+
+        function draw() {
+            // 1. Background Gradient
+            let gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+            gradient.addColorStop(0, "#ffffff");   // White
+            gradient.addColorStop(1, "#ffe0d1");   // Soft peach tint
+            
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // 2. Headline
+            ctx.fillStyle = "#000";
+            ctx.font = "bold 60px Arial";
+            ctx.fillText("Build", 80, 120);
+            ctx.fillText("something", 80, 190);
+            ctx.fillText("beautiful.", 80, 260);
+
+            // 3. Sub-text
+            ctx.font = "18px Arial";
+            ctx.fillStyle = "#555";
+            ctx.fillText("Notion helps you and your team get more done.", 80, 300);
+
+            // 4. Interactive Button
+            ctx.fillStyle = "#0066ff";
+            // Drawing a rounded rectangle for the button
+            ctx.beginPath();
+            ctx.roundRect(btn.x, btn.y, btn.w, btn.h, 8);
+            ctx.fill();
+
+            // Button Text
+            ctx.fillStyle = "white";
+            ctx.font = "bold 16px Arial";
+            ctx.textAlign = "center";
+            ctx.fillText(btn.text, btn.x + btn.w/2, btn.y + 32);
+            ctx.textAlign = "start"; // Reset alignment
+        }
+
+        // 5. Handling the Click
+        canvas.addEventListener('click', function(event) {
+            // Get mouse position relative to canvas
+            const rect = canvas.getBoundingClientRect();
+            const mouseX = event.clientX - rect.left;
+            const mouseY = event.clientY - rect.top;
+
+            // Check if click is inside the button box
+            if (mouseX >= btn.x && mouseX <= btn.x + btn.w &&
+                mouseY >= btn.y && mouseY <= btn.y + btn.h) {
+                
+                alert("Button Clicked! Redirecting to Notion...");
+                // window.location.href = "https://www.notion.so"; // Uncomment to actually redirect
+            }
+        });
+
+        // 6. Change cursor on hover
+        canvas.addEventListener('mousemove', function(event) {
+            const rect = canvas.getBoundingClientRect();
+            const mouseX = event.clientX - rect.left;
+            const mouseY = event.clientY - rect.top;
+
+            if (mouseX >= btn.x && mouseX <= btn.x + btn.w &&
+                mouseY >= btn.y && mouseY <= btn.y + btn.h) {
+                canvas.style.cursor = "pointer";
+            } else {
+                canvas.style.cursor = "default";
+            }
+        });
+
+        draw();
+    </script>
+</body>
+</html>

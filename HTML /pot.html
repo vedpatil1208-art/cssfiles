@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Balloon Shooter Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #e6f0ff;
+            text-align: center;
+        }
+        h1 {
+            background: #ff5c5c;
+            color: white;
+            padding: 10px;
+        }
+        #score {
+            font-size: 20px;
+            margin: 10px;
+        }
+        svg {
+            background: #ffffff;
+            border: 2px solid #ff5c5c;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Balloon Shooter</h1>
+<p>Click the balloons to pop them and score points!</p>
+<div id="score">Score: 0</div>
+
+<svg id="game" width="400" height="400"></svg>
+
+<script>
+    const svg = document.getElementById("game");
+    const scoreText = document.getElementById("score");
+    let score = 0;
+
+    function createBalloon() {
+        const cx = Math.random() * 360 + 20;
+        const cy = 380;
+        const r = 15 + Math.random() * 10;
+
+        const balloon = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+        balloon.setAttribute("cx", cx);
+        balloon.setAttribute("cy", cy);
+        balloon.setAttribute("r", r);
+        balloon.setAttribute("fill", "#ff5c5c");
+
+        svg.appendChild(balloon);
+
+        let speed = 1 + Math.random() * 2;
+
+        const move = setInterval(() => {
+            let y = parseFloat(balloon.getAttribute("cy"));
+            if (y < -20) {
+                clearInterval(move);
+                svg.removeChild(balloon);
+            } else {
+                balloon.setAttribute("cy", y - speed);
+            }
+        }, 20);
+
+        balloon.addEventListener("click", () => {
+            score++;
+            scoreText.textContent = "Score: " + score;
+            clearInterval(move);
+            svg.removeChild(balloon);
+        });
+    }
+
+    // Create a new balloon every 1 second
+    setInterval(createBalloon, 1000);
+</script>
+
+</body>
+</html>
